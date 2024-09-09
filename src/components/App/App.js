@@ -6,11 +6,16 @@ import { fetchAllTricks } from '../../lib/apiCalls';
 
 function App() {
   const [allTricks, setAllTricks] = useState([]);
-  const [formValues, setFormValues] = useState({
+
+  const emptyForm = {
     stance: '',
     name: '',
     obstacle: '',
     tutorial: '',
+  };
+
+  const [formValues, setFormValues] = useState({
+    ...emptyForm,
   });
 
   useEffect(() => {
@@ -31,7 +36,11 @@ function App() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('handleSumbit');
+    const { stance, name, obstacle, tutorial } = formValues;
+    if (stance && name && obstacle && tutorial) {
+      setAllTricks(prevTricks => [...prevTricks, formValues]);
+      setFormValues({ ...emptyForm });
+    }
   };
 
   return (
