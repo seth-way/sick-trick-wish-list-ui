@@ -23,7 +23,7 @@ describe('initial homepage load', () => {
   });
 });
 
-describe('fetch and display tricks', () => {
+describe('fetch & display tricks', () => {
   it('loads initial 3 tricks from fixture', () => {
     cy.get('.tricks').children().should('have.length', 3);
   });
