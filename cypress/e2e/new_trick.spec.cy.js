@@ -33,30 +33,38 @@ describe('create a new trick', () => {
     );
     // new trick is created
     cy.get('.tricks > :nth-child(4)').as('newestTrick');
-    cy.get('@newestTrick').find('ul > :nth-child(1)').contains('regular Tricky new trick', {matchCase: false});
-    cy.get('@newestTrick').find('ul > :nth-child(2)').contains('obstacle: Rail', {matchCase: false});
-    cy.get('@newestTrick').find('ul > :nth-child(3)').contains('link to tutorial:', {matchCase: false});
-    cy.get('@newestTrick').find('ul > :nth-child(4) > a').contains('http://www.tutorial.com', {matchCase: false});
+    cy.get('@newestTrick')
+      .find('ul > :nth-child(1)')
+      .contains('regular Tricky new trick', { matchCase: false });
+    cy.get('@newestTrick')
+      .find('ul > :nth-child(2)')
+      .contains('obstacle: Rail', { matchCase: false });
+    cy.get('@newestTrick')
+      .find('ul > :nth-child(3)')
+      .contains('link to tutorial:', { matchCase: false });
+    cy.get('@newestTrick')
+      .find('ul > :nth-child(4) > a')
+      .contains('http://www.tutorial.com', { matchCase: false });
   });
 
-  it('creates new trick only when all fields contain a value', () => {
+  it('creates new trick ONLY when all fields contain a value', () => {
     cy.get('button').click();
-    cy.get('.tricks').children().should('have.length', 3)
+    cy.get('.tricks').children().should('have.length', 3);
 
     cy.get('[name="stance"]').select('Regular');
     cy.get('button').click();
-    cy.get('.tricks').children().should('have.length', 3)
+    cy.get('.tricks').children().should('have.length', 3);
 
     cy.get('[name="name"]').type('Tricky new trick');
     cy.get('button').click();
-    cy.get('.tricks').children().should('have.length', 3)
+    cy.get('.tricks').children().should('have.length', 3);
 
     cy.get('[name="obstacle"]').select('Rail');
     cy.get('button').click();
-    cy.get('.tricks').children().should('have.length', 3)
+    cy.get('.tricks').children().should('have.length', 3);
 
     cy.get('[name="tutorial"]').type('http://www.tutorial.com');
     cy.get('button').click();
-    cy.get('.tricks').children().should('have.length', 4)
+    cy.get('.tricks').children().should('have.length', 4);
   });
-})
+});
