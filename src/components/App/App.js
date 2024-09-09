@@ -2,7 +2,7 @@ import './App.css';
 import { useState, useEffect } from 'react';
 import NewTrickForm from '../NewTrickForm/NewTrickForm';
 import Trick from '../Trick/Trick';
-import { fetchAllTricks } from '../../lib/apiCalls';
+import { fetchAllTricks, postTrick } from '../../lib/apiCalls';
 
 function App() {
   const [allTricks, setAllTricks] = useState([]);
@@ -34,12 +34,19 @@ function App() {
     }));
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const { stance, name, obstacle, tutorial } = formValues;
     if (stance && name && obstacle && tutorial) {
-      setAllTricks(prevTricks => [...prevTricks, formValues]);
-      setFormValues({ ...emptyForm });
+      try {
+        const newTrick = await postTrick(formValues);
+        if (newTrick.id) {
+          setAllTricks(prevTricks => [...prevTricks, newTrick]);
+          setFormValues({ ...emptyForm });
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
